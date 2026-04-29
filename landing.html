@@ -43,8 +43,13 @@
     <div class="bottom-nav-inner">
       <a href="landing.html" class="active"><i class="fas fa-home"></i><span>Beranda</span></a>
       <a href="#services"><i class="fas fa-th-large"></i><span>Layanan</span></a>
-      <a href="https://wa.me/6287780845042" class="nav-wa" target="_blank"><i
-          class="fab fa-whatsapp"></i><span>Chat</span></a>
+      <div class="nav-wa-container">
+        <div class="wa-popup" id="waPopup">
+          <a href="https://wa.me/6287780845042" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+          <a href="tel:+6287780845042"><i class="fas fa-phone-alt"></i> Telepon</a>
+        </div>
+        <a href="javascript:void(0)" class="nav-wa" id="waToggle"><i class="fab fa-whatsapp"></i></a>
+      </div>
       <a href="blog.html"><i class="fas fa-newspaper"></i><span>Blog</span></a>
       <a href="#contact"><i class="fas fa-user"></i><span>Kontak</span></a>
     </div>
@@ -256,7 +261,7 @@
           <a href="https://wa.me/6287780845042" class="cta-link" id="cta-wa" target="_blank"><i
               class="fab fa-whatsapp"></i> Chat Sekarang</a>
         </div>
-        <div class="cta-card">
+        <div class="cta-card desktop-hide">
           <div class="cta-card-icon"><i class="fas fa-phone-alt"></i></div>
           <h4>Telepon</h4>
           <p>Hubungi kami langsung untuk diskusi lebih detail</p>
@@ -313,7 +318,7 @@
           <h4>Kontak</h4>
           <ul>
             <li><a href="#"><i class="fas fa-map-marker-alt"></i> Bojongsari, Depok</a></li>
-            <li><a href="tel:+6287780845042"><i class="fas fa-phone"></i> +62 877-8084-5042</a></li>
+            <li class="desktop-hide"><a href="tel:+6287780845042"><i class="fas fa-phone"></i> +62 877-8084-5042</a></li>
             <li><a href="mailto:chelatamabojongsari@gmail.com"><i class="fas fa-envelope"></i> chelatamabojongsari@gmail.com</a></li>
           </ul>
         </div>
@@ -339,6 +344,25 @@
     // Navbar scroll
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', scrollY > 50));
+
+    // WhatsApp Popup Toggle
+    const waToggle = document.getElementById('waToggle');
+    const waPopup = document.getElementById('waPopup');
+
+    if (waToggle && waPopup) {
+      waToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        waPopup.classList.toggle('active');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!waPopup.contains(e.target) && e.target !== waToggle) {
+          waPopup.classList.remove('active');
+        }
+      });
+    }
+
+    // Bottom nav active state
 
     // Bottom nav active state
     document.querySelectorAll('.bottom-nav a:not(.nav-wa)').forEach(a => {
